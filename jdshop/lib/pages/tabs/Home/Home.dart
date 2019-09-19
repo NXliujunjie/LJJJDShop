@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:jdshop/service/ljjAdaper.dart';
 
 class HomeVc extends StatefulWidget {
   HomeVc({Key key}) : super(key: key);
@@ -11,12 +11,14 @@ class HomeVc extends StatefulWidget {
 class _HomeVcState extends State<HomeVc> {
   @override
   Widget build(BuildContext context) {
-    ScreenUtil.instance = ScreenUtil(width: 750, height: 1334)..init(context);
+    ljjAdaper.init(context);
     return ListView(
       children: <Widget>[
         _swiper(),
         SizedBox(height: 10),
-        _titleWodget('猜你喜欢'),
+        _titleWodget('猜你喜欢'),//猜你喜欢
+        SizedBox(height: 10),
+        _hostWidget(),//热门
       ],
     );
   }
@@ -54,14 +56,31 @@ Widget _swiper() {
  */
 Widget _titleWodget(value) {
   return Container(
-      height:ScreenUtil.getInstance().setHeight(46) ,
-      margin: EdgeInsets.only(left: 20),
-      padding: EdgeInsets.only(left: 20),
+      height: ljjAdaper.height(42),
+      margin: EdgeInsets.only(
+        left: 20,
+      ),
+      padding: EdgeInsets.only(left: 20, top: 5),
       decoration: BoxDecoration(
           border: Border(
-            left: BorderSide(
-              color: Colors.red, 
-              width: ScreenUtil.getInstance().setWidth(10)
-              ))),
+              left:
+                  BorderSide(color: Colors.red, width: ljjAdaper.height(10)))),
       child: Text(value, style: TextStyle(color: Colors.black54)));
+}
+
+/*
+ * 热门
+ */
+Widget _hostWidget() {
+  return Container(
+    height: ljjAdaper.height(160),
+    width: double.infinity, //自适应
+    child: ListView.builder(
+      scrollDirection: Axis.horizontal, //横向滚动
+      itemBuilder: (context, index) {
+        return Text('第$index个');
+      },
+      itemCount: 20,
+    ),
+  );
 }
