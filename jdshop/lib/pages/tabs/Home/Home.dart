@@ -16,9 +16,9 @@ class _HomeVcState extends State<HomeVc> {
       children: <Widget>[
         _swiper(),
         SizedBox(height: 10),
-        _titleWodget('猜你喜欢'),//猜你喜欢
+        _titleWodget('猜你喜欢'), //猜你喜欢
         SizedBox(height: 10),
-        _hostWidget(),//热门
+        _hostWidget(), //热门
       ],
     );
   }
@@ -58,9 +58,9 @@ Widget _titleWodget(value) {
   return Container(
       height: ljjAdaper.height(42),
       margin: EdgeInsets.only(
-        left: 20,
+        left: ljjAdaper.width(14),
       ),
-      padding: EdgeInsets.only(left: 20, top: 5),
+      padding: EdgeInsets.only(left: 5, top: 5),
       decoration: BoxDecoration(
           border: Border(
               left:
@@ -73,14 +73,31 @@ Widget _titleWodget(value) {
  */
 Widget _hostWidget() {
   return Container(
-    height: ljjAdaper.height(160),
-    width: double.infinity, //自适应
+    height: ljjAdaper.height(220),
+    // width: double.infinity, //自适应
+    padding: EdgeInsets.all(ljjAdaper.width(10)),
     child: ListView.builder(
       scrollDirection: Axis.horizontal, //横向滚动
       itemBuilder: (context, index) {
-        return Text('第$index个');
+        return Column(
+          children: <Widget>[
+            Container(
+              height: ljjAdaper.height(140),
+              width: ljjAdaper.height(140),
+              margin: EdgeInsets.only(right:ljjAdaper.width(21)),
+              child: Image.network(
+                  'https://www.itying.com/images/flutter/hot${index + 1}.jpg',
+                  fit: BoxFit.cover),
+            ),
+            Container(
+              padding: EdgeInsets.only(top: ljjAdaper.height(10)),
+              height: ljjAdaper.height(44),
+              child:Text('第${index + 1}条'),
+            ),
+          ],
+        );
       },
-      itemCount: 20,
+      itemCount: 10,
     ),
   );
 }
