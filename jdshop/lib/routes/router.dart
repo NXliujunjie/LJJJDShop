@@ -4,10 +4,12 @@
 
 import 'package:flutter/material.dart';
 import '../pages/tabs/Tab.dart';
+import '../pages/tabs/Category/Product/ProductList.dart';
 
 //配置路由
 final routes = {
   '/': (context) => Tabs(),
+  '/ProductList': (context,{arguments}) => ProductList(arguments:arguments),
 };
 //固定写法
 var onGenerateRoute = (RouteSettings settings) {
