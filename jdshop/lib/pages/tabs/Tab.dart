@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:jdshop/service/ljjAdaper.dart';
 import 'Home//Home.dart';
 import 'Category/Category.dart';
 import 'User/User.dart';
@@ -26,20 +27,64 @@ class _TabsState extends State<Tabs> {
 
   @override
   Widget build(BuildContext context) {
+    ljjAdaper.init(context);
     return Scaffold(
       appBar: AppBar(
-        title: Text(_titleList[this._currentIndex]),
+        leading: IconButton(
+          icon: Icon(
+            Icons.center_focus_weak,
+            size: ljjAdaper.sizeFont(28),
+            color: Colors.black,
+          ),
+          onPressed: () {},
+        ),
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(
+              Icons.message,
+              size: ljjAdaper.sizeFont(28),
+              color: Colors.black,
+            ),
+            onPressed: () {},
+          )
+        ],
+        title: InkWell(
+          child: Container(
+            height: ljjAdaper.sizeFont(70),
+            padding: EdgeInsets.only(left: 10),
+            decoration: BoxDecoration(
+              color: Color.fromRGBO(233, 233, 233, 0.8),
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                Icon(Icons.search),
+                Text(
+                  '笔记本',
+                  style: TextStyle(
+                    fontSize: ljjAdaper.sizeFont(28),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          onTap: () {
+            Navigator.pushNamed(context, '/Search');
+          },
+        ),
       ),
       body: PageView(
         controller: this._pageController,
         children: this._pageList,
+        physics: NeverScrollableScrollPhysics(),
       ),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: this._currentIndex,
         onTap: (index) {
           setState(() {
-           this._currentIndex = index;
-           this._pageController.jumpToPage(index);
+            this._currentIndex = index;
+            this._pageController.jumpToPage(index);
           });
         },
         type: BottomNavigationBarType.fixed,

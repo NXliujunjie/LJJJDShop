@@ -5,11 +5,14 @@
 import 'package:flutter/material.dart';
 import '../pages/tabs/Tab.dart';
 import '../pages/tabs/Category/Product/ProductList.dart';
+import '../pages/tabs/Search/search.dart';
 
 //配置路由
 final routes = {
   '/': (context) => Tabs(),
   '/ProductList': (context,{arguments}) => ProductList(arguments:arguments),
+  '/Search': (context,{arguments}) => SearchVc(),
+
 };
 //固定写法
 var onGenerateRoute = (RouteSettings settings) {

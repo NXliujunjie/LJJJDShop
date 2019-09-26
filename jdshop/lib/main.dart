@@ -18,6 +18,9 @@ class _MyAppState extends State<MyApp> {
       // home: Tabs()
       initialRoute: '/',
       onGenerateRoute: prefix0.onGenerateRoute,
+      // theme: ThemeData(
+      //   primaryColor: Colors.white
+      // ),
     );
   }
 }
