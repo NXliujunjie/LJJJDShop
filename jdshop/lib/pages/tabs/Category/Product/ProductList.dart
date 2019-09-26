@@ -29,6 +29,9 @@ class _ProductListState extends State<ProductList> {
   //是否有数据
   bool _isHaveSource = true;
 
+  //是否有搜索数据
+  bool _isHaveData = true;
+
   //用于上拉加载更多
   ScrollController _scrollController = ScrollController();
 
@@ -64,11 +67,22 @@ class _ProductListState extends State<ProductList> {
 
   int _selectIndex = 1;
 
+  //配置搜索框默认值
+  var _initKeywordController = new TextEditingController();
+
+  //cid
+  var _cid;
+  var _keyword;
+
   @override
   void initState() {
     super.initState();
-    _getProdectListData();
 
+    this._cid = widget.arguments['cid'];
+    this._keyword = widget.arguments['keyWords'];
+    this._initKeywordController.text = this._keyword;
+    _getProdectListData();
+    print(widget.arguments);
     /**
      * 监听滚动条滚动事件
      */
@@ -85,6 +99,9 @@ class _ProductListState extends State<ProductList> {
         }
       }
     });
+
+    //给serach框框赋值
+    _initKeywordController.text = widget.arguments['keyWords'];
   }
 
 /*
@@ -117,8 +134,16 @@ class _ProductListState extends State<ProductList> {
  * 获取数据
  */
   void _getProdectListData() async {
-    String api =
-        '${ljjConfig.domain}api/plist?cid=${widget.arguments['sId']}&page=${this._page}&sort=${this._sort}&pageSize=${this._pageSize}';
+    String api = '';
+    print('++++++++++++${this._keyword}');
+    if (this._keyword == null) {
+      api =
+          '${ljjConfig.domain}api/plist?cid=${this._cid}&page=${this._page}&sort=${this._sort}&pageSize=${this._pageSize}';
+    } else {
+      api =
+          '${ljjConfig.domain}api/plist?search=${this._keyword}&page=${this._page}&sort=${this._sort}&pageSize=${this._pageSize}';
+    }
+    print(api);
     var result = await Dio().get(api);
     var list = new ProdectModel.fromJson(result.data);
     if (list.result.length < this._pageSize) {
@@ -141,6 +166,17 @@ class _ProductListState extends State<ProductList> {
         this._flag = true;
       });
     }
+
+    //判断是否有搜索数据
+    if (list.result.length == 0) {
+      setState(() {
+        this._isHaveData = false;
+      });
+    } else {
+      setState(() {
+        this._isHaveData = true;
+      });
+    }
   }
 
   @override
@@ -149,9 +185,41 @@ class _ProductListState extends State<ProductList> {
     return Scaffold(
       key: _scaffoldKey,
       appBar: AppBar(
-        title: Text('商品列表'),
+        title: Container(
+          child: TextField(
+            controller: this._initKeywordController,
+            autofocus: false,
+            decoration: InputDecoration(
+                border: OutlineInputBorder(
+                    borderSide: BorderSide.none,
+                    borderRadius: BorderRadius.circular(10))),
+            onChanged: (v) {
+              setState(() {
+                this._keyword = v;
+              });
+            },
+          ),
+          height: 28,
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(10),
+          ),
+        ),
         actions: <Widget>[
-          Text(''), //去除右侧筛选按钮
+          Container(
+            height: 68,
+            width: 80,
+            child: Row(
+              children: <Widget>[
+                InkWell(
+                  child: Text('搜索'),
+                  onTap: () {
+                    this._subHeaderChange(this._subHeaderList[0]);
+                  },
+                )
+              ],
+            ),
+          )
         ],
       ),
       endDrawer: Drawer(
@@ -159,12 +227,14 @@ class _ProductListState extends State<ProductList> {
           child: Text('筛选功能'),
         ),
       ),
-      body: Stack(
-        children: <Widget>[
-          _productWidget(), // 列表界面
-          _headerWidget(),
-        ],
-      ),
+      body: this._isHaveData
+          ? Stack(
+              children: <Widget>[
+                _productWidget(), // 列表界面
+                _headerWidget(),
+              ],
+            )
+          : Text('没有搜索的数据'),
     );
   }
 

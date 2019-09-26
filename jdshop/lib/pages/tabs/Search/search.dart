@@ -8,6 +8,7 @@ class SearchVc extends StatefulWidget {
 }
 
 class _SearchVcState extends State<SearchVc> {
+  var _keyWords;
   @override
   Widget build(BuildContext context) {
     ljjAdaper.init(context);
@@ -21,6 +22,9 @@ class _SearchVcState extends State<SearchVc> {
                   border: OutlineInputBorder(
                       borderSide: BorderSide.none,
                       borderRadius: BorderRadius.circular(10))),
+              onChanged: (v) {
+                this._keyWords = v;
+              },
             ),
             height: 28,
             decoration: BoxDecoration(
@@ -37,7 +41,9 @@ class _SearchVcState extends State<SearchVc> {
                   InkWell(
                     child: Text('搜索'),
                     onTap: () {
-                      print('123123123123123');
+                      Navigator.pushReplacementNamed(context, '/ProductList', arguments: {
+                        'keyWords': this._keyWords,
+                      });
                     },
                   )
                 ],
