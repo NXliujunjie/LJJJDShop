@@ -125,7 +125,7 @@ class _CategoryVcState extends State<CategoryVc>
         (ljjAdaper.getScreenWidthDP() - leftScreenWidth - 20 - 20) / 3;
     var rightItemHeight =
         (ljjAdaper.getScreenWidthDP() - leftScreenWidth - 20 - 20) / 3 +
-            ljjAdaper.height(28) +
+            ljjAdaper.height(30) +
             ljjAdaper.height(5);
     if (this._cateItemModelList.length <= 0) {
       return Expanded(
@@ -169,7 +169,7 @@ class _CategoryVcState extends State<CategoryVc>
                         height: ljjAdaper.height(5),
                       ),
                       Container(
-                        height: ljjAdaper.height(28),
+                        height: ljjAdaper.height(32),
                         child: Text(this._cateDetailItemModelList[index].title),
                       )
                     ],

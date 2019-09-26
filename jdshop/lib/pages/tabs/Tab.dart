@@ -33,7 +33,7 @@ class _TabsState extends State<Tabs> {
         leading: IconButton(
           icon: Icon(
             Icons.center_focus_weak,
-            size: ljjAdaper.sizeFont(28),
+            size: ljjAdaper.sizeFont(35),
             color: Colors.black,
           ),
           onPressed: () {},
@@ -42,7 +42,7 @@ class _TabsState extends State<Tabs> {
           IconButton(
             icon: Icon(
               Icons.message,
-              size: ljjAdaper.sizeFont(28),
+              size: ljjAdaper.sizeFont(35),
               color: Colors.black,
             ),
             onPressed: () {},

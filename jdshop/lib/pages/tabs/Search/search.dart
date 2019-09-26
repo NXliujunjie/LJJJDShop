@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:jdshop/service/ljjAdaper.dart';
 
 class SearchVc extends StatefulWidget {
   SearchVc({Key key}) : super(key: key);
@@ -9,18 +10,17 @@ class SearchVc extends StatefulWidget {
 class _SearchVcState extends State<SearchVc> {
   @override
   Widget build(BuildContext context) {
-   return Container(
-       child: Scaffold(
+    ljjAdaper.init(context);
+    return Container(
+      child: Scaffold(
         appBar: AppBar(
           title: Container(
             child: TextField(
               autofocus: true,
               decoration: InputDecoration(
-                border: OutlineInputBorder(
-                  borderSide: BorderSide.none,
-                  borderRadius: BorderRadius.circular(10)
-                )
-              ),
+                  border: OutlineInputBorder(
+                      borderSide: BorderSide.none,
+                      borderRadius: BorderRadius.circular(10))),
             ),
             height: 28,
             decoration: BoxDecoration(
@@ -36,7 +36,7 @@ class _SearchVcState extends State<SearchVc> {
                 children: <Widget>[
                   InkWell(
                     child: Text('搜索'),
-                    onTap: (){
+                    onTap: () {
                       print('123123123123123');
                     },
                   )
@@ -45,8 +45,117 @@ class _SearchVcState extends State<SearchVc> {
             )
           ],
         ),
-        body: Text('搜索界面'),
-       ),
+        body: Container(
+          padding: EdgeInsets.all(ljjAdaper.height(10)),
+          child: ListView(
+            children: <Widget>[
+              Container(
+                child: Text(
+                  '热搜',
+                  style: Theme.of(context).textTheme.title,
+                ),
+              ),
+              Divider(),
+              Wrap(
+                children: <Widget>[
+                  Container(
+                    padding: EdgeInsets.all(10),
+                    margin: EdgeInsets.all(10),
+                    child: Text('女装'),
+                    decoration: BoxDecoration(
+                      color: Color.fromRGBO(233, 233, 233, 0.8),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                  ),
+                  Container(
+                    padding: EdgeInsets.all(10),
+                    margin: EdgeInsets.all(10),
+                    child: Text('女装'),
+                    decoration: BoxDecoration(
+                      color: Color.fromRGBO(233, 233, 233, 0.8),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                  ),
+                  Container(
+                    padding: EdgeInsets.all(10),
+                    margin: EdgeInsets.all(10),
+                    child: Text('女装女装'),
+                    decoration: BoxDecoration(
+                      color: Color.fromRGBO(233, 233, 233, 0.8),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                  ),
+                  Container(
+                    padding: EdgeInsets.all(10),
+                    margin: EdgeInsets.all(10),
+                    child: Text('女装'),
+                    decoration: BoxDecoration(
+                      color: Color.fromRGBO(233, 233, 233, 0.8),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(height: ljjAdaper.height(10)),
+              Container(
+                child: Text(
+                  '历史记录',
+                  style: Theme.of(context).textTheme.title,
+                ),
+              ),
+              Column(
+                children: <Widget>[
+                  ListTile(
+                    title: Text('123123'),
+                  ),
+                  Divider(),
+                  ListTile(
+                    title: Text('123123'),
+                  ),
+                  Divider(),
+                  ListTile(
+                    title: Text('123123'),
+                  ),
+                  Divider(),
+                  ListTile(
+                    title: Text('123123'),
+                  ),
+                  Divider(),
+                  ListTile(
+                    title: Text('123123'),
+                  ),
+                  Divider(),
+                ],
+              ),
+              SizedBox(
+                height: ljjAdaper.height(40),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Container(
+                    width: 130,
+                    height: 40,
+                    decoration: BoxDecoration(
+                        color: Colors.green,
+                        border: Border.all(
+                          color: Color.fromRGBO(233, 233, 233, 0.7),
+                          width: 1,
+                        )),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        Icon(Icons.delete),
+                        Text('清空历史记录'),
+                      ],
+                    ),
+                  )
+                ],
+              )
+            ],
+          ),
+        ),
+      ),
     );
   }
 }
