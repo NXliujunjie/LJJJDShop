@@ -6,8 +6,6 @@ import 'package:dio/dio.dart';
 import 'package:jdshop/config/config.dart';
 import 'package:jdshop/Models/prodectModel.dart';
 import 'package:jdshop/Models/hotProdectModel.dart';
-import 'package:jdshop/tool/searchServices.dart';
-
 class HomeVc extends StatefulWidget {
   HomeVc({Key key}) : super(key: key);
 
@@ -180,57 +178,64 @@ class _HomeVcState extends State<HomeVc> with AutomaticKeepAliveClientMixin {
     var itemWidth = (ljjAdaper.getScreenWidthDP() - 30) / 2;
     String spic = model.sPic;
     spic = ljjConfig.domain + spic.replaceAll('\\', '/');
-    return Container(
-      padding: EdgeInsets.all(10),
-      width: itemWidth,
-      decoration: BoxDecoration(
-          border:
-              Border.all(color: Color.fromRGBO(233, 233, 233, 0.9), width: 1)),
-      child: Column(
-        children: <Widget>[
-          Container(
-            width: double.infinity,
-            child: AspectRatio(
-              //防止服务器返回的图片大小不一致导致高度不一致问题
-              aspectRatio: 1 / 1,
-              child: Image.network(
-                spic,
-                fit: BoxFit.cover,
+    return InkWell(
+      onTap: (){
+        Navigator.pushNamed(context, '/ProdectDetail', arguments: {
+          'sId':model.sId,
+        });
+      },
+      child: Container(
+        padding: EdgeInsets.all(10),
+        width: itemWidth,
+        decoration: BoxDecoration(
+            border: Border.all(
+                color: Color.fromRGBO(233, 233, 233, 0.9), width: 1)),
+        child: Column(
+          children: <Widget>[
+            Container(
+              width: double.infinity,
+              child: AspectRatio(
+                //防止服务器返回的图片大小不一致导致高度不一致问题
+                aspectRatio: 1 / 1,
+                child: Image.network(
+                  spic,
+                  fit: BoxFit.cover,
+                ),
               ),
             ),
-          ),
-          Padding(
-            padding: EdgeInsets.only(top: ljjAdaper.height(20)),
-            child: Text(
-              model.title,
-              maxLines: 2,
-              overflow: TextOverflow.ellipsis,
-              style: TextStyle(color: Colors.black54),
+            Padding(
+              padding: EdgeInsets.only(top: ljjAdaper.height(20)),
+              child: Text(
+                model.title,
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+                style: TextStyle(color: Colors.black54),
+              ),
             ),
-          ),
-          Padding(
-            padding: EdgeInsets.only(top: ljjAdaper.height(20)),
-            child: Stack(
-              children: <Widget>[
-                Align(
-                  alignment: Alignment.centerLeft,
-                  child: Text(
-                    model.price.toString(),
-                    style: TextStyle(color: Colors.red, fontSize: 16),
+            Padding(
+              padding: EdgeInsets.only(top: ljjAdaper.height(20)),
+              child: Stack(
+                children: <Widget>[
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      model.price.toString(),
+                      style: TextStyle(color: Colors.red, fontSize: 16),
+                    ),
                   ),
-                ),
-                Align(
-                  alignment: Alignment.centerRight,
-                  child: Text(model.oldPrice.toString(),
-                      style: TextStyle(
-                          color: Colors.black54,
-                          fontSize: 14,
-                          decoration: TextDecoration.lineThrough)),
-                )
-              ],
-            ),
-          )
-        ],
+                  Align(
+                    alignment: Alignment.centerRight,
+                    child: Text(model.oldPrice.toString(),
+                        style: TextStyle(
+                            color: Colors.black54,
+                            fontSize: 14,
+                            decoration: TextDecoration.lineThrough)),
+                  )
+                ],
+              ),
+            )
+          ],
+        ),
       ),
     );
   }

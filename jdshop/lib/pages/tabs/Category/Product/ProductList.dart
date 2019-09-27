@@ -5,7 +5,6 @@ import 'package:jdshop/config/config.dart';
 import 'package:jdshop/Models/prodectModel.dart';
 import 'package:jdshop/tool/searchServices.dart';
 import '../../../../tool/ljjHud.dart';
-
 class ProductList extends StatefulWidget {
   final Map arguments;
   ProductList({Key key, this.arguments}) : super(key: key);
