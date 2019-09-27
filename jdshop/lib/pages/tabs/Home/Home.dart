@@ -6,6 +6,7 @@ import 'package:dio/dio.dart';
 import 'package:jdshop/config/config.dart';
 import 'package:jdshop/Models/prodectModel.dart';
 import 'package:jdshop/Models/hotProdectModel.dart';
+import 'package:jdshop/tool/searchServices.dart';
 
 class HomeVc extends StatefulWidget {
   HomeVc({Key key}) : super(key: key);
@@ -177,8 +178,8 @@ class _HomeVcState extends State<HomeVc> with AutomaticKeepAliveClientMixin {
  */
   Widget _recProductItemWidget(model) {
     var itemWidth = (ljjAdaper.getScreenWidthDP() - 30) / 2;
-     String spic = model.sPic;
-     spic = ljjConfig.domain + spic.replaceAll('\\', '/');
+    String spic = model.sPic;
+    spic = ljjConfig.domain + spic.replaceAll('\\', '/');
     return Container(
       padding: EdgeInsets.all(10),
       width: itemWidth,

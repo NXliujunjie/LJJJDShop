@@ -3,6 +3,7 @@ import 'package:jdshop/service/ljjAdaper.dart';
 import 'package:dio/dio.dart';
 import 'package:jdshop/config/config.dart';
 import 'package:jdshop/Models/prodectModel.dart';
+import 'package:jdshop/tool/searchServices.dart';
 import '../../../../tool/ljjHud.dart';
 
 class ProductList extends StatefulWidget {
@@ -214,6 +215,7 @@ class _ProductListState extends State<ProductList> {
                 InkWell(
                   child: Text('搜索'),
                   onTap: () {
+                    SearchServices.setHistoryData(this._keyword);
                     this._subHeaderChange(this._subHeaderList[0]);
                   },
                 )
