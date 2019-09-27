@@ -3,7 +3,7 @@ import 'package:jdshop/service/ljjAdaper.dart';
 import 'ProdectContent/ProdectContentFirst.dart';
 import 'ProdectContent/ProdectContentThird.dart';
 import 'ProdectContent/ProdectContentSecond.dart';
-
+import '../../../../tool/ljjButton.dart';
 // import 'package:jdshop/service/ljjAdaper.dart';
 // import 'package:dio/dio.dart';
 // import 'package:jdshop/config/config.dart';
@@ -76,11 +76,52 @@ class _ProdectDetailState extends State<ProdectDetail> {
               ],
             ),
             Positioned(
-              
-              width: 750,
-              height: 80,
-              bottom: 0,
-              child: Text('123'),
+              width: ljjAdaper.getScreenWidthDP(),
+              height: ljjAdaper.height(88),
+              bottom: 15,
+              child: Container(
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  border: Border(
+                    top: BorderSide(
+                      color: Colors.black87,
+                      width: 1,
+                    ),
+                  ),
+                ),
+                child: Row(
+                  children: <Widget>[
+                    Container(
+                      padding: EdgeInsets.only(top: 5),
+                      margin: EdgeInsets.only(left: 25),
+                      width: ljjAdaper.height(100),
+                      height: ljjAdaper.height(80),
+                      child: Column(
+                        children: <Widget>[
+                          Icon(Icons.shopping_cart),
+                          Text('购物车')
+                        ],
+                      ),
+                    ),
+                    Expanded(
+                      flex: 1,
+                      child: ljjButton(
+                        color: Color.fromRGBO(253, 1, 0, 0.9),
+                        text: '加入购物车',
+                        cb: () {},
+                      ),
+                    ),
+                    Expanded(
+                      flex: 1,
+                      child: ljjButton(
+                        color: Color.fromRGBO(253, 1, 0, 0.9),
+                        text: '立即购买',
+                        cb: () {},
+                      ),
+                    ),
+                  ],
+                ),
+              ),
             )
           ],
         ),
