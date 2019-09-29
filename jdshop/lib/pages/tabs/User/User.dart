@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:jdshop/provider/Container.dart';
+import 'package:provider/provider.dart';
 
 class UserVc extends StatefulWidget {
   UserVc({Key key}) : super(key: key);
@@ -9,10 +11,10 @@ class UserVc extends StatefulWidget {
 class _UserVcState extends State<UserVc> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-       child: Scaffold(
-        body: Text('个人中心'),
-       ),
+
+    var CounterProcider = Provider.of<Containers>(context);
+    return Center(
+      child: Text('_UserVcState:------${CounterProcider.count}'),
     );
   }
 }

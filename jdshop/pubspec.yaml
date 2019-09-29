@@ -27,7 +27,9 @@ dependencies:
   flutter_screenutil: ^0.5.3
   dio: ^3.0.1
   shared_preferences: ^0.5.3+4
-
+  flutter_inappbrowser: ^1.2.1
+  provider: ^3.1.0
+  
 dev_dependencies:
   flutter_test:
     sdk: flutter

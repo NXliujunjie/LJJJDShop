@@ -23,7 +23,7 @@ class _TabsState extends State<Tabs> {
 
   List<Widget> _pageList = [HomeVc(), CategoryVc(), ShopCarVc(), UserVc()];
 
-  List _titleList = ['首页', '分类', '购物车', '我的'];
+  List get _titleList => ['首页', '分类', '购物车', '我的'];
 
   @override
   Widget build(BuildContext context) {
