@@ -11,10 +11,15 @@ class UserVc extends StatefulWidget {
 class _UserVcState extends State<UserVc> {
   @override
   Widget build(BuildContext context) {
-
     var CounterProcider = Provider.of<Containers>(context);
-    return Center(
-      child: Text('_UserVcState:------${CounterProcider.count}'),
+
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('个人中心'),
+      ),
+      body: Center(
+        child: Text('_UserVcState:------${CounterProcider.count}'),
+      ),
     );
   }
 }

@@ -6,6 +6,7 @@ import 'package:dio/dio.dart';
 import 'package:jdshop/config/config.dart';
 import 'package:jdshop/Models/prodectModel.dart';
 import 'package:jdshop/Models/hotProdectModel.dart';
+
 class HomeVc extends StatefulWidget {
   HomeVc({Key key}) : super(key: key);
 
@@ -40,16 +41,63 @@ class _HomeVcState extends State<HomeVc> with AutomaticKeepAliveClientMixin {
   @override
   Widget build(BuildContext context) {
     ljjAdaper.init(context);
-    return ListView(
-      children: <Widget>[
-        _swiper(),
-        SizedBox(height: 10),
-        _titleWodget('猜你喜欢'), //猜你喜欢
-        SizedBox(height: 10),
-        _hostWidget(), //猜你喜欢
-        _titleWodget('热门商品'), //热门商品
-        _recProductWidget(), //热门商品
-      ],
+    return Scaffold(
+      appBar: AppBar(
+        leading: IconButton(
+          icon: Icon(
+            Icons.center_focus_weak,
+            size: ljjAdaper.sizeFont(35),
+            color: Colors.black,
+          ),
+          onPressed: () {},
+        ),
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(
+              Icons.message,
+              size: ljjAdaper.sizeFont(35),
+              color: Colors.black,
+            ),
+            onPressed: () {},
+          )
+        ],
+        title: InkWell(
+          child: Container(
+            height: ljjAdaper.sizeFont(70),
+            padding: EdgeInsets.only(left: 10),
+            decoration: BoxDecoration(
+              color: Color.fromRGBO(233, 233, 233, 0.8),
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                Icon(Icons.search),
+                Text(
+                  '笔记本',
+                  style: TextStyle(
+                    fontSize: ljjAdaper.sizeFont(28),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          onTap: () {
+            Navigator.pushNamed(context, '/Search');
+          },
+        ),
+      ),
+      body: ListView(
+        children: <Widget>[
+          _swiper(),
+          SizedBox(height: 10),
+          _titleWodget('猜你喜欢'), //猜你喜欢
+          SizedBox(height: 10),
+          _hostWidget(), //猜你喜欢
+          _titleWodget('热门商品'), //热门商品
+          _recProductWidget(), //热门商品
+        ],
+      ),
     );
   }
 
@@ -179,9 +227,9 @@ class _HomeVcState extends State<HomeVc> with AutomaticKeepAliveClientMixin {
     String spic = model.sPic;
     spic = ljjConfig.domain + spic.replaceAll('\\', '/');
     return InkWell(
-      onTap: (){
+      onTap: () {
         Navigator.pushNamed(context, '/ProdectDetail', arguments: {
-          'sId':model.sId,
+          'sId': model.sId,
         });
       },
       child: Container(

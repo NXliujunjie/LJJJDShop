@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:jdshop/Models/prodectDetailModel.dart';
 import 'package:jdshop/config/config.dart';
+import 'package:jdshop/pages/tabs/Category/Product/ProdectContent/ProductNum.dart';
+import 'package:jdshop/service/cartService.dart' as prefix0;
 import 'package:jdshop/service/ljjAdaper.dart';
 import 'package:jdshop/tool/ljjButton.dart';
+import 'package:jdshop/tool/ljjEvent.dart';
+import 'package:jdshop/service/cartService.dart';
 
 class ProdectContentFirst extends StatefulWidget {
   final List predectDetailItemModelList;
@@ -18,12 +22,26 @@ class _ProdectContentFirstState extends State<ProdectContentFirst>
   @override
   bool get wantKeepAlive => true;
   String _selectValue;
+  var actionEventBus;
   @override
   void initState() {
     super.initState();
     this._prodectContant = widget.predectDetailItemModelList[0];
     this._attr = this._prodectContant.attr;
     this._initAttr();
+    this.actionEventBus = eventBus.on<ljjProductContentEvent>().listen((event) {
+      print(event);
+      if (this._prodectContant.attr.length > 0) {
+        this._attrBottomSheet();
+      }
+    });
+  }
+
+  //销毁
+  @override
+  void dispose() {
+    super.dispose();
+    this.actionEventBus.cancel();
   }
 
   //格式化数据
@@ -53,14 +71,15 @@ class _ProdectContentFirstState extends State<ProdectContentFirst>
         }
       }
     }
-    setBottomState(() {//改变showModalBottomSheet 数据
+    setBottomState(() {
+      //改变showModalBottomSheet 数据
       this._attr = attr;
     });
     _getAttr();
   }
 
   //获取选中的值
-  void _getAttr(){
+  void _getAttr() {
     var _list = this._attr;
     List tempAttr = [];
     for (var i = 0; i < _list.length; i++) {
@@ -72,6 +91,7 @@ class _ProdectContentFirstState extends State<ProdectContentFirst>
     }
     setState(() {
       this._selectValue = tempAttr.join(',');
+      this._prodectContant.selectAttr = this._selectValue;
     });
   }
 
@@ -129,7 +149,23 @@ class _ProdectContentFirstState extends State<ProdectContentFirst>
                                 .map((PredectDetailItemAttrModel model) {
                               return backWarp(model, setBottomState);
                             }).toList(),
-                          )
+                          ),
+                          Divider(),
+                          Container(
+                              //筛选
+                              margin:
+                                  EdgeInsets.only(top: ljjAdaper.height(10)),
+                              height: ljjAdaper.height(80),
+                              child: InkWell(
+                                  child: Row(
+                                children: <Widget>[
+                                  Text('数量',
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold)),
+                                  SizedBox(width: 10),
+                                  ProductNum(this._prodectContant),
+                                ],
+                              ))),
                         ])),
                     Positioned(
                         bottom: 20,
@@ -137,19 +173,27 @@ class _ProdectContentFirstState extends State<ProdectContentFirst>
                         height: ljjAdaper.width(80),
                         child: Row(children: <Widget>[
                           Expanded(
-                              flex: 1,
-                              child: Container(
-                                  margin: EdgeInsets.fromLTRB(10, 0, 10, 0),
-                                  child: ljjButton(
-                                      color: Color.fromRGBO(253, 1, 0, 0.5),
-                                      text: '加入购物车'))),
+                            flex: 1,
+                            child: Container(
+                              margin: EdgeInsets.fromLTRB(10, 0, 10, 0),
+                              child: ljjButton(
+                                  color: Color.fromRGBO(253, 1, 0, 0.5),
+                                  text: '加入购物车',
+                                  cb: (){
+                                    CartService.addCart(this._prodectContant);
+                                    Navigator.of(context).pop();//关闭底部弹出框
+                                  },),
+                            ),
+                          ),
                           Expanded(
-                              flex: 1,
-                              child: Container(
-                                  margin: EdgeInsets.fromLTRB(10, 0, 10, 0),
-                                  child: ljjButton(
-                                      color: Color.fromRGBO(253, 165, 0, 0.9),
-                                      text: '立即购买'))),
+                            flex: 1,
+                            child: Container(
+                              margin: EdgeInsets.fromLTRB(10, 0, 10, 0),
+                              child: ljjButton(
+                                  color: Color.fromRGBO(253, 165, 0, 0.9),
+                                  text: '立即购买'),
+                            ),
+                          ),
                         ]))
                   ]));
             },

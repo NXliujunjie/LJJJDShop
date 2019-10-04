@@ -2,7 +2,9 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:jdshop/Models/prodectDetailModel.dart';
 import 'package:jdshop/config/config.dart';
+import 'package:jdshop/service/cartService.dart';
 import 'package:jdshop/service/ljjAdaper.dart';
+import 'package:jdshop/tool/ljjEvent.dart';
 import 'package:jdshop/tool/ljjHud.dart';
 import 'ProdectContent/ProdectContentFirst.dart';
 import 'ProdectContent/ProdectContentThird.dart';
@@ -129,7 +131,9 @@ class _ProdectDetailState extends State<ProdectDetail> {
                               child: ljjButton(
                                 color: Color.fromRGBO(253, 1, 0, 0.9),
                                 text: '加入购物车',
-                                cb: () {},
+                                cb: () {
+                                  eventBus.fire(new ljjProductContentEvent('加入购物车'));//广播
+                                },
                               ),
                             ),
                             Expanded(
@@ -137,7 +141,9 @@ class _ProdectDetailState extends State<ProdectDetail> {
                               child: ljjButton(
                                 color: Color.fromRGBO(253, 1, 0, 0.9),
                                 text: '立即购买',
-                                cb: () {},
+                                cb: () {
+                                  eventBus.fire(new ljjProductContentEvent('立即购买'));//广播
+                                },
                               ),
                             ),
                           ],

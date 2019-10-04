@@ -1,12 +1,6 @@
-
 import 'package:flutter/material.dart';
-import 'package:jdshop/pages/tabs/ShopCar/CartItem.dart';
-import 'package:jdshop/provider/Container.dart';
-import 'package:provider/provider.dart';
-import 'CartItem.dart';
-import 'CartNum.dart';
-import 'package:jdshop/provider/Cart.dart';
-import 'package:provider/provider.dart';
+import 'package:jdshop/pages/tabs/ShopCar/CartWares.dart';
+import 'package:jdshop/service/ljjAdaper.dart';
 
 class ShopCarVc extends StatefulWidget {
   ShopCarVc({Key key}) : super(key: key);
@@ -15,33 +9,72 @@ class ShopCarVc extends StatefulWidget {
 }
 
 class _ShopCarVcState extends State<ShopCarVc> {
-
   @override
   Widget build(BuildContext context) {
-
-    var CounterProcider = Provider.of<Containers>(context);
-    var CartProcider = Provider.of<Cart>(context);
-
+    ljjAdaper.init(context);
     return Scaffold(
-      floatingActionButton: FloatingActionButton(
-        onPressed: (){
-          CounterProcider.incount();
-
-          //给购物车增加数据
-          CartProcider.addData('哈哈${CounterProcider.count}');
-        },
-        child: Icon(Icons.add),
+      appBar: AppBar(
+        title: Text('购物车'),
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(Icons.launch),
+            onPressed: null,
+          )
+        ],
       ),
-      body: Column(
+      body: Stack(
         children: <Widget>[
-          Center(
-            child: Text('统计数量${CounterProcider.count}'),
+          ListView(
+            children: <Widget>[CartWares()],
           ),
-          Divider(),
-          //购物车列表
-          CartItem(),
-          Divider(),
-          CartNum(),
+          Positioned(
+            bottom: 0,
+            width: ljjAdaper.getScreenWidthDP(),
+            height: ljjAdaper.height(78),
+            child: Container(
+              width: ljjAdaper.getScreenWidthDP(),
+              height: ljjAdaper.height(78),
+              child: Stack(
+                children: <Widget>[
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: Row(
+                      children: <Widget>[
+                        Container(
+                          margin: EdgeInsets.only(left: 15),
+                          width: ljjAdaper.width(60),
+                          child: Checkbox(
+                            value: true,
+                            activeColor: Colors.pink,
+                            onChanged: (v) {},
+                          ),
+                        ),
+                        Text('全选'),
+                      ],
+                    ),
+                  ),
+                  Align(
+                    alignment: Alignment.centerRight,
+                    child: Container(
+                      margin: EdgeInsets.only(right: 15),
+                      child: RaisedButton(
+                        child: Text(
+                          '结算',
+                          style: TextStyle(color: Colors.white),
+                        ),
+                        color: Colors.red,
+                        onPressed: () {},
+                      ),
+                    ),
+                  )
+                ],
+              ),
+              decoration: BoxDecoration(
+                  color: Colors.white,
+                  border:
+                      Border(top: BorderSide(width: 1, color: Colors.black12))),
+            ),
+          )
         ],
       ),
     );

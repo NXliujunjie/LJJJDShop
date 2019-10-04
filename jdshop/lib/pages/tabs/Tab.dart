@@ -29,51 +29,6 @@ class _TabsState extends State<Tabs> {
   Widget build(BuildContext context) {
     ljjAdaper.init(context);
     return Scaffold(
-      appBar: AppBar(
-        leading: IconButton(
-          icon: Icon(
-            Icons.center_focus_weak,
-            size: ljjAdaper.sizeFont(35),
-            color: Colors.black,
-          ),
-          onPressed: () {},
-        ),
-        actions: <Widget>[
-          IconButton(
-            icon: Icon(
-              Icons.message,
-              size: ljjAdaper.sizeFont(35),
-              color: Colors.black,
-            ),
-            onPressed: () {},
-          )
-        ],
-        title: InkWell(
-          child: Container(
-            height: ljjAdaper.sizeFont(70),
-            padding: EdgeInsets.only(left: 10),
-            decoration: BoxDecoration(
-              color: Color.fromRGBO(233, 233, 233, 0.8),
-              borderRadius: BorderRadius.circular(10),
-            ),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: <Widget>[
-                Icon(Icons.search),
-                Text(
-                  '笔记本',
-                  style: TextStyle(
-                    fontSize: ljjAdaper.sizeFont(28),
-                  ),
-                ),
-              ],
-            ),
-          ),
-          onTap: () {
-            Navigator.pushNamed(context, '/Search');
-          },
-        ),
-      ),
       body: PageView(
         controller: this._pageController,
         children: this._pageList,
