@@ -17,7 +17,6 @@ class _ShopCarVcState extends State<ShopCarVc> {
     ljjAdaper.init(context);
 
     var cartProcider = Provider.of<Cart>(context);
-    print("wwwwwwwwwwwwwww${cartProcider.cartList}");
     return Scaffold(
       appBar: AppBar(
         title: Text('购物车'),
@@ -52,9 +51,11 @@ class _ShopCarVcState extends State<ShopCarVc> {
                           margin: EdgeInsets.only(left: 15),
                           width: ljjAdaper.width(60),
                           child: Checkbox(
-                            value: true,
+                            value: cartProcider.isChecketAll(),
                             activeColor: Colors.pink,
-                            onChanged: (v) {},
+                            onChanged: (v) {
+                              cartProcider.checkAll(v);
+                            },
                           ),
                         ),
                         Text('全选'),

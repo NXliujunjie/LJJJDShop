@@ -1,20 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:jdshop/pages/tabs/ShopCar/CartTotal.dart';
+import 'package:jdshop/provider/Cart.dart';
 import 'package:jdshop/service/ljjAdaper.dart';
+import 'package:provider/provider.dart';
 
 class CartWares extends StatefulWidget {
   Map _itemData;
 
-  CartWares(this._itemData,{Key key}) : super(key: key);
+  CartWares(this._itemData, {Key key}) : super(key: key);
   _CartWaresState createState() => _CartWaresState();
 }
 
 class _CartWaresState extends State<CartWares> {
-
   Map _itemData;
-  
+
   @override
-  void initState() { 
+  void initState() {
     super.initState();
     this._itemData = widget._itemData;
     print('asdasdasd${this._itemData}');
@@ -23,6 +24,7 @@ class _CartWaresState extends State<CartWares> {
   @override
   Widget build(BuildContext context) {
     ljjAdaper.init(context);
+    var cartProcider = Provider.of<Cart>(context);
     return Container(
       height: ljjAdaper.height(200),
       decoration: BoxDecoration(
@@ -38,8 +40,12 @@ class _CartWaresState extends State<CartWares> {
           Container(
             width: ljjAdaper.width(60),
             child: Checkbox(
-              value: true,
-              onChanged: (v) {},
+              value: this._itemData['checket'],
+              onChanged: (v) {
+                  this._itemData['checket'] = !this._itemData['checket'];
+                  cartProcider.itemChange();
+           
+              },
               activeColor: Colors.pink,
             ),
           ),

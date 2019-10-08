@@ -22,14 +22,14 @@ dependencies:
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
-  cupertino_icons: ^0.1.2
-  flutter_swiper: ^1.1.6
-  flutter_screenutil: ^0.5.3
-  dio: ^3.0.1
-  shared_preferences: ^0.5.3+4
-  flutter_inappbrowser: ^1.2.1
-  provider: ^3.1.0
-  event_bus: ^1.1.0
+  cupertino_icons: ^0.1.2 #图标
+  flutter_swiper: ^1.1.6 #分页组件 ScrollView
+  flutter_screenutil: ^0.5.3 #flutter 屏幕适配方案，让你的UI在不同尺寸的屏幕上都能显示合理的布局!
+  dio: ^3.0.1 #dio是一个强大的Dart Http请求库，支持Restful API、FormData、拦截器、请求取消、Cookie管理、文件上传/下载、超时、自定义适配器等...
+  shared_preferences: ^0.5.3+4 #包装NSUserDefaults（在iOS上）和SharedPreferences（在Android上），为简单数据提供持久存储。数据异步保存到磁盘。这两个平台都不能保证在返回后将写操作持久化到磁盘，并且该插件不得用于存储关键数据。
+  flutter_inappbrowser: ^1.2.1 #Flutter插件，可让您添加嵌入式Web视图或打开应用内浏览器窗口
+  provider: ^3.1.0  #依赖项注入（DI）和状态管理之间的混合，使用用于小部件的小部件构建。
+  event_bus: ^1.1.0 #事件总线遵循发布/订阅模式。它允许侦听器订阅事件，并允许发布者触发事件。这使对象可以进行交互，而无需显式定义侦听器并对其进行跟踪。
   
 dev_dependencies:
   flutter_test:

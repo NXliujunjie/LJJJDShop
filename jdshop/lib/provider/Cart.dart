@@ -6,6 +6,8 @@ class Cart with ChangeNotifier {
 
   List cartList = [];
   int get cartNum => this.cartList.length;
+  bool _getCheckedAll = false;//状态
+  bool get getCheckedAll => _getCheckedAll;//状态
 
   Cart(){
     this.init();
@@ -25,5 +27,41 @@ class Cart with ChangeNotifier {
 
   updateCartList(){
     this.init();
+  }
+
+  changeItemCount(){
+    LJJSaveData.setString("cartList", json.encode(this.cartList));
+    notifyListeners();//表示更新状态
+  }
+
+  //全选反选
+  checkAll(value){
+    for (var i = 0; i < this.cartList.length; i++) {
+      this.cartList[i]['checket'] = value;
+    }
+    _getCheckedAll = value;
+    LJJSaveData.setString("cartList", json.encode(this.cartList));
+    notifyListeners();//表示更新状态
+  }
+
+  //判断是否全选
+  bool isChecketAll(){
+    for (var i = 0; i < this.cartList.length; i++) {
+      if (this.cartList[i]['checket'] == false) {
+        return false;
+      }
+    }
+    return true;
+  }
+
+  //监听每一项
+   itemChange(){
+    if (this.isChecketAll()) {
+      this._getCheckedAll = true;
+    }else{
+      this._getCheckedAll = false;
+    }
+    LJJSaveData.setString("cartList", json.encode(this.cartList));
+    notifyListeners();//表示更新状态
   }
 }

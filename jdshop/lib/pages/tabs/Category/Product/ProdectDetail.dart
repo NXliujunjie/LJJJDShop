@@ -2,7 +2,6 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:jdshop/Models/prodectDetailModel.dart';
 import 'package:jdshop/config/config.dart';
-import 'package:jdshop/service/cartService.dart';
 import 'package:jdshop/service/ljjAdaper.dart';
 import 'package:jdshop/tool/ljjEvent.dart';
 import 'package:jdshop/tool/ljjHud.dart';
