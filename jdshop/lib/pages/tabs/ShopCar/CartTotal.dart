@@ -2,12 +2,23 @@ import 'package:flutter/material.dart';
 import 'package:jdshop/service/ljjAdaper.dart';
 
 class CartTotal extends StatefulWidget {
-  CartTotal({Key key}) : super(key: key);
 
+  Map itemData;
+
+  CartTotal(this.itemData, {Key key}) : super(key: key);
+   
   _CartTotalState createState() => _CartTotalState();
 }
 
 class _CartTotalState extends State<CartTotal> {
+  Map itemData;
+
+@override
+void initState() { 
+  super.initState();
+  this.itemData= widget.itemData;
+}
+
   @override
   Widget build(BuildContext context) {
     ljjAdaper.init(context);
@@ -71,7 +82,7 @@ class _CartTotalState extends State<CartTotal> {
       alignment: Alignment.center,
       width: ljjAdaper.width(70),
       height: ljjAdaper.height(45),
-      child: Text('1'),
+      child: Text(this.itemData['count'].toString()),
     );
   }
 }

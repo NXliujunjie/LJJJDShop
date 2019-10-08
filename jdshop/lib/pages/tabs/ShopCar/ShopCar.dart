@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:jdshop/pages/tabs/ShopCar/CartWares.dart';
+import 'package:jdshop/provider/Cart.dart';
 import 'package:jdshop/service/ljjAdaper.dart';
+import 'package:provider/provider.dart';
 
 class ShopCarVc extends StatefulWidget {
   ShopCarVc({Key key}) : super(key: key);
@@ -10,8 +12,12 @@ class ShopCarVc extends StatefulWidget {
 
 class _ShopCarVcState extends State<ShopCarVc> {
   @override
+  
   Widget build(BuildContext context) {
     ljjAdaper.init(context);
+
+    var cartProcider = Provider.of<Cart>(context);
+    print("wwwwwwwwwwwwwww${cartProcider.cartList}");
     return Scaffold(
       appBar: AppBar(
         title: Text('购物车'),
@@ -25,7 +31,9 @@ class _ShopCarVcState extends State<ShopCarVc> {
       body: Stack(
         children: <Widget>[
           ListView(
-            children: <Widget>[CartWares()],
+            children: cartProcider.cartList.map((v) {
+              return CartWares(v);
+            }).toList(),
           ),
           Positioned(
             bottom: 0,

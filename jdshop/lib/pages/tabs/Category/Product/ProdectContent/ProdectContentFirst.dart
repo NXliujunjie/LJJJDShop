@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:jdshop/Models/prodectDetailModel.dart';
 import 'package:jdshop/config/config.dart';
 import 'package:jdshop/pages/tabs/Category/Product/ProdectContent/ProductNum.dart';
+import 'package:jdshop/provider/Cart.dart';
 import 'package:jdshop/service/cartService.dart' as prefix0;
 import 'package:jdshop/service/ljjAdaper.dart';
 import 'package:jdshop/tool/ljjButton.dart';
 import 'package:jdshop/tool/ljjEvent.dart';
 import 'package:jdshop/service/cartService.dart';
+import 'package:provider/provider.dart';
 
 class ProdectContentFirst extends StatefulWidget {
   final List predectDetailItemModelList;
@@ -23,6 +25,7 @@ class _ProdectContentFirstState extends State<ProdectContentFirst>
   bool get wantKeepAlive => true;
   String _selectValue;
   var actionEventBus;
+  var cartProvider;
   @override
   void initState() {
     super.initState();
@@ -130,79 +133,9 @@ class _ProdectContentFirstState extends State<ProdectContentFirst>
     );
   }
 
-  //底部弹窗
-  void _attrBottomSheet() {
-    showModalBottomSheet(
-        context: context,
-        builder: (context) {
-          return StatefulBuilder(
-            builder: (BuildContext context, setBottomState) {
-              return GestureDetector(
-                  onTap: () {},
-                  child: Stack(children: <Widget>[
-                    Container(
-                        padding: EdgeInsets.all(10),
-                        child: ListView(children: <Widget>[
-                          Column(
-                            children: this
-                                ._attr
-                                .map((PredectDetailItemAttrModel model) {
-                              return backWarp(model, setBottomState);
-                            }).toList(),
-                          ),
-                          Divider(),
-                          Container(
-                              //筛选
-                              margin:
-                                  EdgeInsets.only(top: ljjAdaper.height(10)),
-                              height: ljjAdaper.height(80),
-                              child: InkWell(
-                                  child: Row(
-                                children: <Widget>[
-                                  Text('数量',
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold)),
-                                  SizedBox(width: 10),
-                                  ProductNum(this._prodectContant),
-                                ],
-                              ))),
-                        ])),
-                    Positioned(
-                        bottom: 20,
-                        width: ljjAdaper.getScreenWidthDP(),
-                        height: ljjAdaper.width(80),
-                        child: Row(children: <Widget>[
-                          Expanded(
-                            flex: 1,
-                            child: Container(
-                              margin: EdgeInsets.fromLTRB(10, 0, 10, 0),
-                              child: ljjButton(
-                                  color: Color.fromRGBO(253, 1, 0, 0.5),
-                                  text: '加入购物车',
-                                  cb: (){
-                                    CartService.addCart(this._prodectContant);
-                                    Navigator.of(context).pop();//关闭底部弹出框
-                                  },),
-                            ),
-                          ),
-                          Expanded(
-                            flex: 1,
-                            child: Container(
-                              margin: EdgeInsets.fromLTRB(10, 0, 10, 0),
-                              child: ljjButton(
-                                  color: Color.fromRGBO(253, 165, 0, 0.9),
-                                  text: '立即购买'),
-                            ),
-                          ),
-                        ]))
-                  ]));
-            },
-          );
-        });
-  }
-
   @override
   Widget build(BuildContext context) {
+    this.cartProvider = Provider.of<Cart>(context);
     ljjAdaper.init(context);
     String spic = this._prodectContant.pic;
     spic = ljjConfig.domain + spic.replaceAll('\\', '/');
@@ -313,5 +246,80 @@ class _ProdectContentFirstState extends State<ProdectContentFirst>
         ],
       ),
     );
+  }
+
+  //底部弹窗
+  void _attrBottomSheet() {
+    showModalBottomSheet(
+        context: context,
+        builder: (context) {
+         
+          return StatefulBuilder(
+            builder: (BuildContext context, setBottomState) {
+              return GestureDetector(
+                  onTap: () {},
+                  child: Stack(children: <Widget>[
+                    Container(
+                        padding: EdgeInsets.all(10),
+                        child: ListView(children: <Widget>[
+                          Column(
+                            children: this
+                                ._attr
+                                .map((PredectDetailItemAttrModel model) {
+                              return backWarp(model, setBottomState);
+                            }).toList(),
+                          ),
+                          Divider(),
+                          Container(
+                              //筛选
+                              margin:
+                                  EdgeInsets.only(top: ljjAdaper.height(10)),
+                              height: ljjAdaper.height(80),
+                              child: InkWell(
+                                  child: Row(
+                                children: <Widget>[
+                                  Text('数量',
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold)),
+                                  SizedBox(width: 10),
+                                  ProductNum(this._prodectContant),
+                                ],
+                              ))),
+                        ])),
+                    Positioned(
+                        bottom: 20,
+                        width: ljjAdaper.getScreenWidthDP(),
+                        height: ljjAdaper.width(80),
+                        child: Row(children: <Widget>[
+                          Expanded(
+                            flex: 1,
+                            child: Container(
+                              margin: EdgeInsets.fromLTRB(10, 0, 10, 0),
+                              child: ljjButton(
+                                color: Color.fromRGBO(253, 1, 0, 0.5),
+                                text: '加入购物车',
+                                cb: () async {
+                                  await CartService.addCart(this._prodectContant);
+                                  Navigator.of(context).pop(); //关闭底部弹出框
+                                  //调用Provider 更新数据
+                                  this.cartProvider.updateCartList();
+                                },
+                              ),
+                            ),
+                          ),
+                          Expanded(
+                            flex: 1,
+                            child: Container(
+                              margin: EdgeInsets.fromLTRB(10, 0, 10, 0),
+                              child: ljjButton(
+                                  color: Color.fromRGBO(253, 165, 0, 0.9),
+                                  text: '立即购买'),
+                            ),
+                          ),
+                        ]))
+                  ]));
+            },
+          );
+        });
   }
 }

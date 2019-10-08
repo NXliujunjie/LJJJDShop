@@ -3,12 +3,23 @@ import 'package:jdshop/pages/tabs/ShopCar/CartTotal.dart';
 import 'package:jdshop/service/ljjAdaper.dart';
 
 class CartWares extends StatefulWidget {
-  CartWares({Key key}) : super(key: key);
+  Map _itemData;
 
+  CartWares(this._itemData,{Key key}) : super(key: key);
   _CartWaresState createState() => _CartWaresState();
 }
 
 class _CartWaresState extends State<CartWares> {
+
+  Map _itemData;
+  
+  @override
+  void initState() { 
+    super.initState();
+    this._itemData = widget._itemData;
+    print('asdasdasd${this._itemData}');
+  }
+
   @override
   Widget build(BuildContext context) {
     ljjAdaper.init(context);
@@ -36,7 +47,7 @@ class _CartWaresState extends State<CartWares> {
             width: ljjAdaper.width(160),
             height: ljjAdaper.width(160),
             child: Image.network(
-              'https://www.itying.com/images/flutter/list2.jpg',
+              '${this._itemData['pic']}',
               fit: BoxFit.cover,
             ),
           ),
@@ -46,17 +57,22 @@ class _CartWaresState extends State<CartWares> {
               padding: EdgeInsets.fromLTRB(10, 20, 10, 10),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Text(
-                    '文档翻译 专业论文 产品介绍 合同标书 简历证件 留学移民 创意翻译 我知道了 翻译API 翻译APP 登录 划词 自动检测语言 自动检测语言 中文» 英语 英语» ...',
+                    '${this._itemData['title']}',
                     maxLines: 2,
+                  ),
+                  Text(
+                    '${this._itemData['selectAttr']}',
+                    maxLines: 1,
                   ),
                   Stack(
                     children: <Widget>[
                       Align(
                         alignment: Alignment.centerLeft,
                         child: Text(
-                          '￥${20}',
+                          '￥${this._itemData['price']}',
                           style: TextStyle(
                             color: Colors.red,
                           ),
@@ -64,7 +80,7 @@ class _CartWaresState extends State<CartWares> {
                       ),
                       Align(
                         alignment: Alignment.centerRight,
-                        child: CartTotal(),
+                        child: CartTotal(this._itemData),
                       )
                     ],
                   )
