@@ -11,8 +11,10 @@ class ShopCarVc extends StatefulWidget {
 }
 
 class _ShopCarVcState extends State<ShopCarVc> {
+
+  bool isEdit = false;
+
   @override
-  
   Widget build(BuildContext context) {
     ljjAdaper.init(context);
 
@@ -23,7 +25,11 @@ class _ShopCarVcState extends State<ShopCarVc> {
         actions: <Widget>[
           IconButton(
             icon: Icon(Icons.launch),
-            onPressed: null,
+            onPressed: (){
+              setState(() {
+                this.isEdit = !this.isEdit;
+              });
+            },
           )
         ],
       ),
@@ -59,23 +65,44 @@ class _ShopCarVcState extends State<ShopCarVc> {
                           ),
                         ),
                         Text('全选'),
+                        SizedBox(width: 20,),
+                        this.isEdit == false ? Text('合计:') : Text(''),
+                        this.isEdit == false ? Text('${cartProcider.allPrice.toString()}', style: TextStyle(
+                          fontSize: 12,
+                          color: Colors.red,
+                        ),) : Text(''),
                       ],
                     ),
                   ),
-                  Align(
+                  this.isEdit == false ? Align(
                     alignment: Alignment.centerRight,
                     child: Container(
                       margin: EdgeInsets.only(right: 15),
                       child: RaisedButton(
                         child: Text(
-                          '结算',
+                           '结算',
                           style: TextStyle(color: Colors.white),
                         ),
                         color: Colors.red,
                         onPressed: () {},
                       ),
                     ),
-                  )
+                  ) : Align(
+                    alignment: Alignment.centerRight,
+                    child: Container(
+                      margin: EdgeInsets.only(right: 15),
+                      child: RaisedButton(
+                        child: Text(
+                          '删除',
+                          style: TextStyle(color: Colors.white),
+                        ),
+                        color: Colors.red,
+                        onPressed: () {
+                          cartProcider.removeItem();
+                        },
+                      ),
+                    ),
+                  ),
                 ],
               ),
               decoration: BoxDecoration(

@@ -3,12 +3,12 @@ import 'package:jdshop/Models/prodectDetailModel.dart';
 import 'package:jdshop/config/config.dart';
 import 'package:jdshop/pages/tabs/Category/Product/ProdectContent/ProductNum.dart';
 import 'package:jdshop/provider/Cart.dart';
-import 'package:jdshop/service/cartService.dart' as prefix0;
 import 'package:jdshop/service/ljjAdaper.dart';
 import 'package:jdshop/tool/ljjButton.dart';
 import 'package:jdshop/tool/ljjEvent.dart';
 import 'package:jdshop/service/cartService.dart';
 import 'package:provider/provider.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class ProdectContentFirst extends StatefulWidget {
   final List predectDetailItemModelList;
@@ -51,6 +51,8 @@ class _ProdectContentFirstState extends State<ProdectContentFirst>
   void _initAttr() {
     var attr = this._attr;
     for (var i = 0; i < attr.length; i++) {
+      attr[i].attrList.clear(); //清空数组的属性
+
       for (var j = 0; j < attr[i].list.length; j++) {
         attr[i].attrList.add({
           'title': attr[i].list[j],
@@ -64,6 +66,7 @@ class _ProdectContentFirstState extends State<ProdectContentFirst>
   //改变数据
   void _chageAttr(cate, title, setBottomState) {
     var attr = this._attr;
+
     for (var i = 0; i < attr.length; i++) {
       if (attr[i].cate == cate) {
         for (var j = 0; j < attr[i].attrList.length; j++) {
@@ -253,7 +256,6 @@ class _ProdectContentFirstState extends State<ProdectContentFirst>
     showModalBottomSheet(
         context: context,
         builder: (context) {
-         
           return StatefulBuilder(
             builder: (BuildContext context, setBottomState) {
               return GestureDetector(
@@ -299,10 +301,16 @@ class _ProdectContentFirstState extends State<ProdectContentFirst>
                                 color: Color.fromRGBO(253, 1, 0, 0.5),
                                 text: '加入购物车',
                                 cb: () async {
-                                  await CartService.addCart(this._prodectContant);
+                                  await CartService.addCart(
+                                      this._prodectContant);
                                   Navigator.of(context).pop(); //关闭底部弹出框
                                   //调用Provider 更新数据
                                   this.cartProvider.updateCartList();
+                                  Fluttertoast.showToast(
+                                      msg: "加入购物车成功",
+                                      toastLength: Toast.LENGTH_LONG,
+                                      gravity: ToastGravity.CENTER,
+                                      fontSize: 16.0);
                                 },
                               ),
                             ),

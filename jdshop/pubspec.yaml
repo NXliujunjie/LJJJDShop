@@ -30,7 +30,7 @@ dependencies:
   flutter_inappbrowser: ^1.2.1 #Flutter插件，可让您添加嵌入式Web视图或打开应用内浏览器窗口
   provider: ^3.1.0  #依赖项注入（DI）和状态管理之间的混合，使用用于小部件的小部件构建。
   event_bus: ^1.1.0 #事件总线遵循发布/订阅模式。它允许侦听器订阅事件，并允许发布者触发事件。这使对象可以进行交互，而无需显式定义侦听器并对其进行跟踪。
-  
+  fluttertoast: ^3.1.3 #适用于Flutter的Android和iOS Toast库
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -48,9 +48,16 @@ flutter:
   uses-material-design: true
 
   # To add assets to your application, add an assets section, like this:
-  # assets:
-  #  - images/a_dot_burr.jpeg
-  #  - images/a_dot_ham.jpeg
+  assets:
+   - images/user_bg.jpg
+   - images/2.0x/user_bg.jpg
+   - images/3.0x/user_bg.jpg
+   - images/user.png
+   - images/2.0x/user.png
+   - images/3.0x/user.png
+   - images/login.png
+   - images/2.0x/login.png
+   - images/3.0x/login.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

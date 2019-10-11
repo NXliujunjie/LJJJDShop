@@ -13,16 +13,10 @@ class CartWares extends StatefulWidget {
 
 class _CartWaresState extends State<CartWares> {
   Map _itemData;
-
-  @override
-  void initState() {
-    super.initState();
-    this._itemData = widget._itemData;
-    print('asdasdasd${this._itemData}');
-  }
-
+  
   @override
   Widget build(BuildContext context) {
+    this._itemData = widget._itemData;
     ljjAdaper.init(context);
     var cartProcider = Provider.of<Cart>(context);
     return Container(
