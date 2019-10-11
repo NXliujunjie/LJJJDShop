@@ -4,9 +4,6 @@ import 'package:jdshop/provider/Container.dart';
 import 'package:jdshop/routes/router.dart';
 import 'package:provider/provider.dart';
 
-// import 'pages/tabs/Tab.dart';
-// import 'routes/router.dart';
-
 void main() => runApp(MyApp());
 
 class MyApp extends StatefulWidget {
