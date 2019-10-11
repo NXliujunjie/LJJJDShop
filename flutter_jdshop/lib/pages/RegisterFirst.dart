@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
-
 import '../widget/JdText.dart';
 import '../widget/JdButton.dart';
 import '../services/ScreenAdapter.dart';
+import 'package:dio/dio.dart';
+import '../config/Config.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class RegisterFirstPage extends StatefulWidget {
   RegisterFirstPage({Key key}) : super(key: key);
@@ -11,6 +13,25 @@ class RegisterFirstPage extends StatefulWidget {
 }
 
 class _RegisterFirstPageState extends State<RegisterFirstPage> {
+  String tel;
+  //获取验证码跳转
+  void setCode() async {
+    RegExp reg = new RegExp(r'^1\d{10}$');
+    if (reg.hasMatch(this.tel)) {
+      var api = '${Config.domain}api/sendCode';
+      var response = await Dio().post(api, data: {'tel': this.tel});
+      if (response.data['success']) {
+        Navigator.pushNamed(context, '/registerSecond', arguments: {
+          'tell':this.tel,
+        });
+      } else {
+        Fluttertoast.showToast(msg: '请求失败');
+      }
+    } else {
+      Fluttertoast.showToast(msg: '格式错误');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,7 +46,7 @@ class _RegisterFirstPageState extends State<RegisterFirstPage> {
             JdText(
               text: "请输入手机号",
               onChanged: (value) {
-                print(value);
+                this.tel = value;
               },
             ),
             SizedBox(height: 20),
@@ -33,9 +54,7 @@ class _RegisterFirstPageState extends State<RegisterFirstPage> {
               text: "下一步",
               color: Colors.red,
               height: 74,
-              cb: () {
-                Navigator.pushNamed(context, '/registerSecond');
-              },
+              cb: this.setCode,
             )
           ],
         ),

@@ -23,7 +23,7 @@ final routes = {
   '/cart': (context) => CartPage(),
   '/login': (context) => LoginPage(),
   '/registerFirst': (context) => RegisterFirstPage(),
-  '/registerSecond': (context) => RegisterSecondPage(),
+  '/registerSecond': (context, {arguments}) => RegisterSecondPage(arguments: arguments),
   '/registerThird': (context) => RegisterThirdPage(),
   '/productList': (context, {arguments}) =>
       ProductListPage(arguments: arguments),

@@ -137,7 +137,7 @@ class _ProdectContentFirstState extends State<ProdectContentFirst>
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context) { // ignore: must_call_super
     this.cartProvider = Provider.of<Cart>(context);
     ljjAdaper.init(context);
     String spic = this._prodectContant.pic;
