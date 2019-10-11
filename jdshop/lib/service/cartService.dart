@@ -47,7 +47,11 @@ class CartService {
     final Map data = new Map<String, dynamic>();
     data['_id'] = item.sId;
     data['title'] = item.title;
-    data['price'] = item.price;
+    if (item.price is int || item.price is double) {
+      data['price'] = item.price;
+    }else{
+      data['price'] = double.parse(item.price);
+    }
     data['selectAttr'] = item.selectAttr;
     data['count'] = item.count;
     data['pic'] = pic;

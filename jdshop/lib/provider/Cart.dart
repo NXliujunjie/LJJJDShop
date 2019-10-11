@@ -7,7 +7,9 @@ class Cart with ChangeNotifier {
   List cartList = [];
   int get cartNum => this.cartList.length;
   bool _getCheckedAll = false;//状态
-  bool get getCheckedAll => _getCheckedAll;//状态
+  bool get getCheckedAll => _getCheckedAll;//全选//状态
+  double _allPrice;//总价
+  double get allPrice  => this._allPrice ;//全选//状态
 
   Cart(){
     this.init();
@@ -22,6 +24,8 @@ class Cart with ChangeNotifier {
       this.cartList=[];
       print(222222);
     }
+     //计算总价
+    this.computeAllPrice();
     notifyListeners();//表示更新状态
   }
 
@@ -31,6 +35,8 @@ class Cart with ChangeNotifier {
 
   changeItemCount(){
     LJJSaveData.setString("cartList", json.encode(this.cartList));
+     //计算总价
+    this.computeAllPrice();
     notifyListeners();//表示更新状态
   }
 
@@ -40,6 +46,8 @@ class Cart with ChangeNotifier {
       this.cartList[i]['checket'] = value;
     }
     _getCheckedAll = value;
+    //计算总价
+    this.computeAllPrice();
     LJJSaveData.setString("cartList", json.encode(this.cartList));
     notifyListeners();//表示更新状态
   }
@@ -61,7 +69,39 @@ class Cart with ChangeNotifier {
     }else{
       this._getCheckedAll = false;
     }
+    //计算总价
+    this.computeAllPrice();
     LJJSaveData.setString("cartList", json.encode(this.cartList));
     notifyListeners();//表示更新状态
+  }
+
+  //计算总价
+  computeAllPrice(){
+     double tempAllPrice = 0;
+     for (var i = 0; i < this.cartList.length; i++) {
+      if (this.cartList[i]['checket'] == true) {
+         tempAllPrice += this.cartList[i]['price'] * this.cartList[i]['count'];
+      }
+    }
+
+    this._allPrice = tempAllPrice;
+    notifyListeners();//表示更新状态
+  }
+
+  //删除数据
+  removeItem(){
+    var tempList = [];
+
+     for (var i = 0; i < this.cartList.length; i++) {
+      if (this.cartList[i]['checket'] == false) {
+         tempList.add(this.cartList[i]);
+      }
+    }
+    this.cartList = tempList;
+    
+    LJJSaveData.setString("cartList", json.encode(this.cartList));
+   //计算总价
+   this.computeAllPrice();
+
   }
 }
